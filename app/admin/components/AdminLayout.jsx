@@ -43,9 +43,9 @@ export default function AdminLayout({ children }) {
       >
         <Sidebar />
       </div>
-      <section className="flex-1 flex flex-col min-h-screen">
+      <section className="flex-1 flex flex-col min-h-screen overflow-hidden">
         <Header toggleSidebar={toggleSidebar} />
-        <section className="flex-1 bg-[#eff3f4] overflow-hidden">
+        <section className="pt-14 flex-1 bg-[#eff3f4]">
           {children}
         </section>
       </section>
