@@ -5,11 +5,41 @@ import { deleteProduct } from "@/lib/firestore/products/write";
 import { Button, CircularProgress } from "@nextui-org/react";
 import { Edit2, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function ListView() {
-  const { data: products, error, isLoading } = useProducts();
+  const [pageLimit, setPageLimit] = useState(10);
+  const [lastSnapDocList, setLastSnapDocList] = useState([]);
+
+  useEffect(() => {
+    setLastSnapDocList([]);
+  }, [pageLimit]);
+
+  const {
+    data: products,
+    error,
+    isLoading,
+    lastSnapDoc,
+  } = useProducts({
+    pageLimit: pageLimit,
+    lastSnapDoc:
+      lastSnapDocList?.length === 0
+        ? null
+        : lastSnapDocList[lastSnapDocList?.length - 1],
+  });
+
+  const handleNextPage = () => {
+    let newStack = [...lastSnapDocList];
+    newStack.push(lastSnapDoc);
+    setLastSnapDocList(newStack);
+  };
+
+  const handlePrePage = () => {
+    let newStack = [...lastSnapDocList];
+    newStack.pop();
+    setLastSnapDocList(newStack);
+  };
 
   if (isLoading) {
     return (
@@ -52,10 +82,47 @@ export default function ListView() {
         </thead>
         <tbody>
           {products?.map((item, index) => {
-            return <Row index={index} item={item} key={item?.id} />;
+            return (
+              <Row
+                index={index + lastSnapDocList?.length * pageLimit}
+                item={item}
+                key={item?.id}
+              />
+            );
           })}
         </tbody>
       </table>
+      <div className="flex justify-between text-sm py-3">
+        <Button
+          isDisabled={isLoading || lastSnapDocList?.length === 0}
+          onClick={handlePrePage}
+          size="sm"
+          variant="bordered"
+        >
+          Previous
+        </Button>
+        <select
+          value={pageLimit}
+          onChange={(e) => setPageLimit(e.target.value)}
+          className="px-5 rounded-xl"
+          name="perpage"
+          id="perpage"
+        >
+          <option value={3}>3 Items</option>
+          <option value={5}>5 Items</option>
+          <option value={10}>10 Items</option>
+          <option value={20}>20 Items</option>
+          <option value={100}>100 Items</option>
+        </select>
+        <Button
+          isDisabled={isLoading || products?.length === 0}
+          onClick={handleNextPage}
+          size="sm"
+          variant="bordered"
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }

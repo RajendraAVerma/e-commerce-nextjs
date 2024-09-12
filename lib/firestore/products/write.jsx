@@ -40,6 +40,40 @@ export const createNewProduct = async ({ data, featureImage, imageList }) => {
   });
 };
 
+export const updateProduct = async ({ data, featureImage, imageList }) => {
+  if (!data?.title) {
+    throw new Error("Title is required");
+  }
+  if (!data?.id) {
+    throw new Error("ID is required");
+  }
+
+  let featureImageURL = data?.featureImageURL ?? "";
+
+  if (featureImage) {
+    const featureImageRef = ref(storage, `products/${featureImage?.name}`);
+    await uploadBytes(featureImageRef, featureImage);
+    featureImageURL = await getDownloadURL(featureImageRef);
+  }
+
+  let imageURLList = imageList?.length === 0 ? data?.imageList : [];
+
+  for (let i = 0; i < imageList?.length; i++) {
+    const image = imageList[i];
+    const imageRef = ref(storage, `products/${image?.name}`);
+    await uploadBytes(imageRef, image);
+    const url = await getDownloadURL(imageRef);
+    imageURLList.push(url);
+  }
+
+  await setDoc(doc(db, `products/${data?.id}`), {
+    ...data,
+    featureImageURL: featureImageURL,
+    imageList: imageURLList,
+    timestampUpdate: Timestamp.now(),
+  });
+};
+
 export const deleteProduct = async ({ id }) => {
   if (!id) {
     throw new Error("ID is required");
