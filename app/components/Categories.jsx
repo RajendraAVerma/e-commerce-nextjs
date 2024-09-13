@@ -9,10 +9,37 @@ import Slider from "react-slick";
 export default function Categories({ categories }) {
   var settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
-    slidesToShow: 7,
-    slidesToScroll: 1,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          initialSlide: 3,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
   };
 
   if (categories.length === 0) {
@@ -20,7 +47,7 @@ export default function Categories({ categories }) {
   }
 
   return (
-    <div className="flex flex-col gap-8 justify-center overflow-hidden p-10">
+    <div className="flex flex-col gap-8 justify-center overflow-hidden md:p-10 p-5">
       <div className="flex justify-center w-full">
         <h1 className="text-lg font-semibold">Shop By Category</h1>
       </div>
@@ -33,7 +60,7 @@ export default function Categories({ categories }) {
             <Link href={"/"}>
               <div className="px-2">
                 <div className="flex flex-col gap-2 items-center justify-center">
-                  <div className="h-32 w-32 rounded-full p-5 border overflow-hidden">
+                  <div className="md:h-32 md:w-32 h-24 w-24 rounded-full md:p-5 p-2 border overflow-hidden">
                     <img src={category?.imageURL} alt="" />
                   </div>
                   <h1 className="font-semibold">{category?.name}</h1>

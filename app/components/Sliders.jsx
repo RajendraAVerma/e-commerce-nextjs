@@ -18,20 +18,24 @@ export default function FeaturedProductSlider({ featuredProducts }) {
         {featuredProducts?.map((product) => {
           return (
             <div>
-              <div className="flex gap-4 bg-[#f8f8f8] p-10 md:px-24 md:py-20 w-full">
-                <div className="flex-1 flex flex-col gap-10">
-                  <h2 className="text-gray-500">NEW FASHION</h2>
+              <div className="flex flex-col-reverse md:flex-row gap-4 bg-[#f8f8f8] p-5 md:px-24 md:py-20 w-full">
+                <div className="flex-1 flex flex-col md:gap-10 gap-4">
+                  <h2 className="text-gray-500 text-xs md:text-base">
+                    NEW FASHION
+                  </h2>
                   <div className="flex flex-col gap-4">
-                    <h1 className="text-4xl font-semibold">{product?.title}</h1>
-                    <h1 className="text-gray-600 text-sm max-w-96 line-clamp-2">
+                    <h1 className="md:text-4xl text-xl font-semibold">
+                      {product?.title}
+                    </h1>
+                    <h1 className="text-gray-600 md:text-sm text-xs max-w-96 line-clamp-2">
                       {product?.shortDescription}
                     </h1>
                   </div>
                   <div className="flex gap-4">
-                    <Button className="bg-blue-500 text-white text-sm">
+                    <Button className="bg-blue-500 text-white text-xs md:text-sm">
                       BUY NOW
                     </Button>
-                    <Button className="border-2 border-blue-500 bg-white text-blue-500 text-sm">
+                    <Button className="border-2 border-blue-500 bg-white text-blue-500 text-xs md:text-sm">
                       ADD TO CART
                     </Button>
                     <Button
@@ -44,7 +48,7 @@ export default function FeaturedProductSlider({ featuredProducts }) {
                 </div>
                 <div className="">
                   <img
-                    className="h-[23rem]"
+                    className="h-[14rem] md:h-[23rem]"
                     src={product?.featureImageURL}
                     alt=""
                   />

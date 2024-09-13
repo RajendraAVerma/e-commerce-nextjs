@@ -16,9 +16,9 @@ export default function Header() {
     },
   ];
   return (
-    <nav className="py-4 px-14 border-b flex items-center justify-between">
-      <img className="h-9" src="/logo.png" alt="" />
-      <div className="flex gap-4 items-center font-semibold">
+    <nav className="py-2 px-7 md:py-4 md:px-14 border-b flex items-center justify-between">
+      <img className="h-5 md:h-9" src="/logo.png" alt="" />
+      <div className="hidden md:flex gap-4 items-center font-semibold">
         {menuList?.map((item) => {
           return (
             <Link href={item?.link}>
