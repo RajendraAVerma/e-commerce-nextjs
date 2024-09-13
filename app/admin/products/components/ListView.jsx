@@ -163,7 +163,12 @@ function Row({ item, index }) {
         </div>
       </td>
       <td className="border-y bg-white px-3 py-2 whitespace-nowrap">
-        {item?.title}
+        {item?.title}{" "}
+        {item?.isFeatured === true && (
+          <span className="ml-2 bg-gradient-to-tr from-blue-500 to-indigo-400 text-white text-[10px] rounded-full px-3 py-1">
+            Featured
+          </span>
+        )}
       </td>
       <td className="border-y bg-white px-3 py-2  whitespace-nowrap">
         {item?.salePrice < item?.price && (
