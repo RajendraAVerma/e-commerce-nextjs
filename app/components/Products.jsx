@@ -1,6 +1,7 @@
 import { Rating } from "@mui/material";
 import { Button } from "@nextui-org/react";
 import { Heart, ShoppingCart } from "lucide-react";
+import Link from "next/link";
 
 export default function ProductsGridView({ products }) {
   return (
@@ -17,7 +18,7 @@ export default function ProductsGridView({ products }) {
   );
 }
 
-function ProductCard({ product }) {
+export function ProductCard({ product }) {
   return (
     <div className="flex flex-col gap-3 border p-4 rounded-lg">
       <div className="relative w-full">
@@ -38,7 +39,17 @@ function ProductCard({ product }) {
           </Button>
         </div>
       </div>
-      <h1 className="font-semibold line-clamp-2 text-sm">{product?.title}</h1>
+      <Link href={`/products/${product?.id}`}>
+        <h1 className="font-semibold line-clamp-2 text-sm">{product?.title}</h1>
+      </Link>
+      <div className="">
+        <h2 className="text-green-500 text-sm font-semibold">
+          ₹ {product?.salePrice}{" "}
+          <span className="line-through text-xs text-gray-600">
+            ₹ {product?.price}
+          </span>
+        </h2>
+      </div>
       <p className="text-xs text-gray-500 line-clamp-2">
         {product?.shortDescription}
       </p>

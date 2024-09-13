@@ -2,6 +2,7 @@
 
 import { Button } from "@nextui-org/react";
 import { Heart } from "lucide-react";
+import Link from "next/link";
 import Slider from "react-slick";
 
 export default function FeaturedProductSlider({ featuredProducts }) {
@@ -24,9 +25,11 @@ export default function FeaturedProductSlider({ featuredProducts }) {
                     NEW FASHION
                   </h2>
                   <div className="flex flex-col gap-4">
-                    <h1 className="md:text-4xl text-xl font-semibold">
-                      {product?.title}
-                    </h1>
+                    <Link href={`/products/${product?.id}`}>
+                      <h1 className="md:text-4xl text-xl font-semibold">
+                        {product?.title}
+                      </h1>
+                    </Link>
                     <h1 className="text-gray-600 md:text-sm text-xs max-w-96 line-clamp-2">
                       {product?.shortDescription}
                     </h1>
@@ -47,11 +50,13 @@ export default function FeaturedProductSlider({ featuredProducts }) {
                   </div>
                 </div>
                 <div className="">
-                  <img
-                    className="h-[14rem] md:h-[23rem]"
-                    src={product?.featureImageURL}
-                    alt=""
-                  />
+                  <Link href={`/products/${product?.id}`}>
+                    <img
+                      className="h-[14rem] md:h-[23rem]"
+                      src={product?.featureImageURL}
+                      alt=""
+                    />
+                  </Link>
                 </div>
               </div>
             </div>
