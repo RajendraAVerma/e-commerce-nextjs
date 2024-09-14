@@ -12,7 +12,7 @@ export default function Layout({ children }) {
       <Header />
       <AuthContextProvider>
         <UserChecking>
-          <section>{children}</section>
+          <section className="min-h-screen">{children}</section>
         </UserChecking>
       </AuthContextProvider>
       <Footer />

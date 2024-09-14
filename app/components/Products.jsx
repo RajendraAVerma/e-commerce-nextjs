@@ -4,6 +4,7 @@ import { Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import FavoriteButton from "./FavoriteButton";
 import AuthContextProvider from "@/contexts/AuthContext";
+import AddToCartButton from "./AddToCartButton";
 
 export default function ProductsGridView({ products }) {
   return (
@@ -59,13 +60,17 @@ export function ProductCard({ product }) {
         />
         <h1 className="text-xs text-gray-400">(0)</h1>
       </div>
-      <div className="flex items-center gap-4">
-        <button className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg text-xs">
-          Buy Now
-        </button>
-        <Button isIconOnly size="sm">
-          <ShoppingCart size={13} />
-        </Button>
+      <div className="flex items-center gap-4 w-full">
+        <div className="w-full">
+          <Link href={`/checkout?type=buynow&productId=${product?.id}`}>
+            <button className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg text-xs w-full">
+              Buy Now
+            </button>
+          </Link>
+        </div>
+        <AuthContextProvider>
+          <AddToCartButton productId={product?.id} />
+        </AuthContextProvider>
       </div>
     </div>
   );
