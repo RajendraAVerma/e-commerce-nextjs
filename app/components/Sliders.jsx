@@ -4,6 +4,8 @@ import { Button } from "@nextui-org/react";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import Slider from "react-slick";
+import FavoriteButton from "./FavoriteButton";
+import AuthContextProvider from "@/contexts/AuthContext";
 
 export default function FeaturedProductSlider({ featuredProducts }) {
   var settings = {
@@ -34,19 +36,16 @@ export default function FeaturedProductSlider({ featuredProducts }) {
                       {product?.shortDescription}
                     </h1>
                   </div>
-                  <div className="flex gap-4">
+                  <div className="flex items-center gap-4">
                     <Button className="bg-blue-500 text-white text-xs md:text-sm">
                       BUY NOW
                     </Button>
                     <Button className="border-2 border-blue-500 bg-white text-blue-500 text-xs md:text-sm">
                       ADD TO CART
                     </Button>
-                    <Button
-                      isIconOnly
-                      className="border-2 border-pink-500 bg-white text-pink-500"
-                    >
-                      <Heart size={14} />
-                    </Button>
+                    <AuthContextProvider>
+                      <FavoriteButton productId={product?.id} />
+                    </AuthContextProvider>
                   </div>
                 </div>
                 <div className="">

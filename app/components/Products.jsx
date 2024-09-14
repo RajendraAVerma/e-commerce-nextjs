@@ -2,6 +2,8 @@ import { Rating } from "@mui/material";
 import { Button } from "@nextui-org/react";
 import { Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import FavoriteButton from "./FavoriteButton";
+import AuthContextProvider from "@/contexts/AuthContext";
 
 export default function ProductsGridView({ products }) {
   return (
@@ -28,15 +30,9 @@ export function ProductCard({ product }) {
           alt={product?.title}
         />
         <div className="absolute top-1 right-1">
-          <Button
-            variant="light"
-            color="danger"
-            className="rounded-full"
-            isIconOnly
-            size="sm"
-          >
-            <Heart size={13} />
-          </Button>
+          <AuthContextProvider>
+            <FavoriteButton productId={product?.id} />
+          </AuthContextProvider>
         </div>
       </div>
       <Link href={`/products/${product?.id}`}>
