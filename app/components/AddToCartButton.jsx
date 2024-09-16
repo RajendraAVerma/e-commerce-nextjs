@@ -40,6 +40,21 @@ export default function AddToCartButton({ productId, type }) {
     setIsLoading(false);
   };
 
+  if (type === "cute") {
+    return (
+      <Button
+        isLoading={isLoading}
+        isDisabled={isLoading}
+        onClick={handlClick}
+        variant="bordered"
+        className=""
+      >
+        {!isAdded && "Add To Cart"}
+        {isAdded && "Click To Remove"}
+      </Button>
+    );
+  }
+
   if (type === "large") {
     return (
       <Button
