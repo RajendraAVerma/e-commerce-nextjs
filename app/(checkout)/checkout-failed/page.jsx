@@ -1,9 +1,22 @@
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
+import { adminDB } from "@/lib/firebase_admin";
 import Link from "next/link";
 
+const fetchCheckout = async (checkoutId) => {
+  const list = await adminDB
+    .collectionGroup("checkout_sessions")
+    .where("id", "==", checkoutId)
+    .get();
+  if (list.docs.length === 0) {
+    throw new Error("Invalid Checkout ID");
+  }
+  return list.docs[0].data();
+};
+
 export default async function Page({ searchParams }) {
-  const checkoutId = searchParams;
+  const { checkout_id } = searchParams;
+  const checkout = await fetchCheckout(checkout_id);
   return (
     <main>
       <Header />
@@ -18,7 +31,7 @@ export default async function Page({ searchParams }) {
               Shop
             </button>
           </Link>
-          <Link href={"/"}>
+          <Link href={checkout?.url}>
             <button className="bg-blue-600 border px-5 py-2 rounded-lg text-white">
               Retry
             </button>

@@ -16,6 +16,7 @@
     "@nextui-org/react": "^2.4.6",
     "canvas-confetti": "^1.9.3",
     "firebase": "^10.13.1",
+    "firebase-admin": "^12.5.0",
     "framer-motion": "^11.5.4",
     "lucide-react": "^0.439.0",
     "next": "14.2.9",
