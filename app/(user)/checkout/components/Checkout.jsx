@@ -1,5 +1,7 @@
 "use client";
 
+import { useAuth } from "@/contexts/AuthContext";
+import { createCheckoutAndGetURL } from "@/lib/firestore/checkout/write";
 import { Button } from "@nextui-org/react";
 import confetti from "canvas-confetti";
 import { CheckSquare2Icon, Square } from "lucide-react";
@@ -12,6 +14,7 @@ export default function Checkout({ productList }) {
   const [paymentMode, setPaymentMode] = useState("prepaid");
   const [address, setAddress] = useState(null);
   const router = useRouter();
+  const { user } = useAuth();
 
   const handleAddress = (key, value) => {
     setAddress({ ...(address ?? {}), [key]: value });
@@ -30,18 +33,24 @@ export default function Checkout({ productList }) {
       if (!address?.fullName || !address?.mobile || !address?.addressLine1) {
         throw new Error("Please Fill All Address Details");
       }
-      await new Promise((res) => setTimeout(res, 3000));
-      // TODO : Create API to Place Order
+
+      if (!productList || productList?.length === 0) {
+        throw new Error("Product List Is Empty");
+      }
 
       if (paymentMode === "prepaid") {
-        // Razor pay payment gateway
+        const url = await createCheckoutAndGetURL({
+          uid: user?.uid,
+          products: productList,
+          address: address,
+        });
+        router.push(url);
       } else {
         // Call API To Create Order with COD
       }
-
-      toast.success("Successfully Placed!");
-      confetti();
-      router.push("/account");
+      // toast.success("Successfully Placed!");
+      // confetti();
+      // router.push("/account");
     } catch (error) {
       toast.error(error?.message);
     }
