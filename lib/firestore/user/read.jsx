@@ -20,3 +20,23 @@ export function useUser({ uid }) {
 
   return { data, error: error?.message, isLoading: data === undefined };
 }
+
+export function useUsers() {
+  const { data, error } = useSWRSubscription(["users"], ([path], { next }) => {
+    const ref = collection(db, path);
+    const unsub = onSnapshot(
+      ref,
+      (snapshot) =>
+        next(
+          null,
+          snapshot.docs.length === 0
+            ? null
+            : snapshot.docs.map((snap) => snap.data())
+        ),
+      (err) => next(err, null)
+    );
+    return () => unsub();
+  });
+
+  return { data, error: error?.message, isLoading: data === undefined };
+}

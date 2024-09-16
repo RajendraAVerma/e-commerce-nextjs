@@ -3,7 +3,8 @@
 import { useAllOrders } from "@/lib/firestore/orders/read";
 import { useProducts } from "@/lib/firestore/products/read";
 import { deleteProduct } from "@/lib/firestore/products/write";
-import { Button, CircularProgress } from "@nextui-org/react";
+import { useUser } from "@/lib/firestore/user/read";
+import { Avatar, Button, CircularProgress } from "@nextui-org/react";
 import { Edit2, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -133,13 +134,20 @@ function Row({ item, index }) {
   const totalAmount = item?.checkout?.line_items?.reduce((prev, curr) => {
     return prev + (curr?.price_data?.unit_amount / 100) * curr?.quantity;
   }, 0);
+  const { data: user } = useUser({ uid: item?.uid });
   return (
     <tr>
       <td className="border-y bg-white px-3 py-2 border-l rounded-l-lg text-center">
         {index + 1}
       </td>
       <td className="border-y bg-white px-3 py-2 whitespace-nowrap">
-        {item?.uid}
+        <div className="flex gap-2 items-center">
+          <Avatar size="sm" src={user?.photoURL} />
+          <div className="flex flex-col">
+            <h1> {user?.displayName}</h1>
+            <h1 className="text-xs text-gray-600"> {user?.email}</h1>
+          </div>
+        </div>
       </td>
       <td className="border-y bg-white px-3 py-2  whitespace-nowrap">
         ₹ {totalAmount}
