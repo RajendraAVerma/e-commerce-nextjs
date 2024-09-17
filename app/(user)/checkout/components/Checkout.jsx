@@ -55,9 +55,9 @@ export default function Checkout({ productList }) {
           address: address,
         });
         router.push(`/checkout-cod?checkout_id=${checkoutId}`);
+        toast.success("Successfully Placed!");
+        confetti();
       }
-      toast.success("Successfully Placed!");
-      confetti();
     } catch (error) {
       toast.error(error?.message);
     }
