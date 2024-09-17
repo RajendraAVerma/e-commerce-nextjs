@@ -23,6 +23,11 @@ const processOrder = async ({ checkout }) => {
 
   await adminDB.doc(`orders/${checkout?.id}`).set({
     checkout: checkout,
+    payment: {
+      amount: checkout?.line_items?.reduce((prev, curr) => {
+        return prev + curr?.price_data?.unit_amount * curr?.quantity;
+      }, 0),
+    },
     uid: uid,
     id: checkout?.id,
     paymentMode: "cod",
