@@ -1,12 +1,10 @@
-import { Rating } from "@mui/material";
-import { Button } from "@nextui-org/react";
-import { Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import FavoriteButton from "./FavoriteButton";
 import AuthContextProvider from "@/contexts/AuthContext";
 import AddToCartButton from "./AddToCartButton";
 import { getProductReviewCounts } from "@/lib/firestore/products/count/read";
 import { Suspense } from "react";
+import MyRating from "./MyRating";
 
 export default function ProductsGridView({ products }) {
   return (
@@ -82,13 +80,7 @@ async function RatingReview({ product }) {
   const counts = await getProductReviewCounts({ productId: product?.id });
   return (
     <div className="flex gap-3 items-center">
-      <Rating
-        size="small"
-        name="product-rating"
-        defaultValue={counts?.averageRating ?? 0}
-        precision={0.5}
-        readOnly
-      />
+      <MyRating value={counts?.averageRating ?? 0} />
       <h1 className="text-xs text-gray-400">
         <span>{counts?.averageRating?.toFixed(1)}</span> ({counts?.totalReviews}
         )

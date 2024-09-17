@@ -1,12 +1,10 @@
 import AddToCartButton from "@/app/components/AddToCartButton";
 import FavoriteButton from "@/app/components/FavoriteButton";
+import MyRating from "@/app/components/MyRating";
 import AuthContextProvider from "@/contexts/AuthContext";
 import { getBrand } from "@/lib/firestore/brands/read_server";
 import { getCategory } from "@/lib/firestore/categories/read_server";
 import { getProductReviewCounts } from "@/lib/firestore/products/count/read";
-import { Rating } from "@mui/material";
-import { Button } from "@nextui-org/react";
-import { Heart } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -86,12 +84,7 @@ async function RatingReview({ product }) {
   const counts = await getProductReviewCounts({ productId: product?.id });
   return (
     <div className="flex gap-3 items-center">
-      <Rating
-        name="product-rating"
-        defaultValue={counts?.averageRating ?? 0}
-        precision={0.5}
-        readOnly
-      />
+      <MyRating value={counts?.averageRating ?? 0} />
       <h1 className="text-sm text-gray-400">
         <span>{counts?.averageRating?.toFixed(1)}</span> ({counts?.totalReviews}
         )
