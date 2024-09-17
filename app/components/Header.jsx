@@ -21,7 +21,7 @@ export default function Header() {
     },
   ];
   return (
-    <nav className="sticky top-0 z-50 bg-white bg-opacity-65 backdrop-blur-2xl py-1 px-4 md:py-2 md:px-16 border-b flex items-center justify-between">
+    <nav className="sticky top-0 z-50 bg-white bg-opacity-65 backdrop-blur-2xl py-3 px-4 md:py-4 md:px-16 border-b flex items-center justify-between">
       <Link href={"/"}>
         <img className="h-4 md:h-5" src="/logo.png" alt="Logo" />
       </Link>
