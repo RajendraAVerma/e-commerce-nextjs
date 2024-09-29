@@ -125,6 +125,31 @@ service cloud.firestore {
 }
 ```
 
+## Firestore Storage Security Rules
+
+```plaintext
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth.uid != null && firestore.exists(/databases/(default)/documents/admins/$(request.auth.token.email));
+    }
+  }
+}
+```
+
+## Demo
+
+You can explore the demo of the e-commerce website at [this link](https://docs-reader-store.vercel.app). 
+
+To access the Admin Panel, use the following credentials:
+
+- **Email**: admin@gmail.com
+- **Password**: iloveyou
+
+(Note: This demo admin account has read and write permissions disabled for security purposes.)
+
 ## Conclusion
 
 This project provides a robust e-commerce solution leveraging modern technologies. Feel free to customize and extend its functionality as needed.
