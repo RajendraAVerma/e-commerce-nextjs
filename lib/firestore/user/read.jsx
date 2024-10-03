@@ -1,7 +1,13 @@
 "use client";
 
 import { db } from "@/lib/firebase";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import useSWRSubscription from "swr/subscription";
 
 export function useUser({ uid }) {
@@ -23,9 +29,9 @@ export function useUser({ uid }) {
 
 export function useUsers() {
   const { data, error } = useSWRSubscription(["users"], ([path], { next }) => {
-    const ref = collection(db, path);
+    const q = query(collection(db, path), orderBy("timestampCreate", "desc"));
     const unsub = onSnapshot(
-      ref,
+      q,
       (snapshot) =>
         next(
           null,
