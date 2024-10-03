@@ -28,7 +28,7 @@ export default function RevenueChart({ items }) {
     datasets: [
       {
         label: "Revenue",
-        data: items?.map((item) => item?.data?.totalRevenue),
+        data: items?.map((item) => (item?.data?.totalRevenue ?? 0) / 100),
         backgroundColor: "#879fff20",
         borderColor: "#879fff80",
       },
